@@ -5,6 +5,10 @@ const PORT = 3000;
 // body parser
 app.use(express.json());
 
+//static assets folder
+app.use(express.static("public"));
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 })
