@@ -4,6 +4,7 @@ const PORT = 3000;
 
 const moviesRouter = require("./routes/movies")
 const notFound = require("./middlewares/notFound");
+const serverError = require("./middlewares/serverError");
 
 // body parser
 app.use(express.json());
@@ -23,3 +24,5 @@ app.get("/", (req, res) => {
 app.use("/api/movies", moviesRouter);
 
 app.use(notFound);
+
+app.use(serverError);
