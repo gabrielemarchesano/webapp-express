@@ -2,9 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-const connection = require("./database/connections");
-
 const moviesRouter = require("./routes/movies")
+const notFound = require("./middlewares/notFound");
 
 // body parser
 app.use(express.json());
@@ -22,3 +21,5 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/movies", moviesRouter);
+
+app.use(notFound);
