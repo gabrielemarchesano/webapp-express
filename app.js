@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+const connection = require("./database/connections")
+
 // body parser
 app.use(express.json());
 
