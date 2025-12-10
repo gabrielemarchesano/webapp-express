@@ -22,6 +22,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM movies WHERE id = ?";
+  const sqlReviews = "SELECT id, name, vote, text FROM reviews WHERE movie_id = ?";
 
   connection.query(sql, [id], (err, results) => {
     if(err){
@@ -33,13 +34,24 @@ router.get("/:id", (req, res) => {
     if(results.length === 0){
       return res.status(404).json({
         error: true,
-        message: "Book not found"
+        message: "Movie not found"
       });
     };
 
-    const book = results[0];
-    res.json(book);
-    console.log(book);
+    const movie = results[0];
+
+    connection.query(sqlReviews, [id], (errReviews, resultsReviews) => {
+      if(errReviews){
+        return res.status(500).json({
+        error: true,
+        message: errReviews.message
+        });
+      };
+
+      movie.reviews = resultsReviews;
+      res.json(movie);
+      console.log(movie);
+    });
 
   })
 
