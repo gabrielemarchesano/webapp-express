@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
 const PORT = 3000;
+const cors = require("cors");
 
 const moviesRouter = require("./routes/movies")
 const notFound = require("./middlewares/notFound");
 const serverError = require("./middlewares/serverError");
+
+// middleware for CORS
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
 
 // body parser
 app.use(express.json());
