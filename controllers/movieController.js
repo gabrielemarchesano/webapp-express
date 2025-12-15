@@ -39,8 +39,8 @@ function show(req, res){
     connection.query(sqlReviews, [id], (errReviews, resultsReviews) => {
       if(errReviews){
         return res.status(500).json({
-        error: true,
-        message: errReviews.message
+          error: true,
+          message: errReviews.message
         });
       };
 
@@ -53,10 +53,26 @@ function show(req, res){
 }
 
 function storeReview(req, res){
-  res.send("Review posted");
   console.log(req.body);
-  
-}
+
+  const movie_id = Number(req.params.id);
+  const { name, vote, text } = req.body;
+  console.log(movie_id, name, vote, text);
+
+  const sql = "INSERT INTO reviews (movie_id, name, vote, text) VALUES (?, ?, ?, ?)";
+
+  connection.query(sql, [movie_id, name, vote, text], (err, results) =>{
+    if(err){
+      return res.status(500).json({
+        error: true,
+        message: err.message
+      });
+    }
+    res.status(201).json({
+      message: "review posted correctly"
+    });
+  });
+};
 
 module.exports = {
   index,
