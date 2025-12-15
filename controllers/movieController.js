@@ -52,7 +52,14 @@ function show(req, res){
   })
 }
 
+function storeReview(req, res){
+  res.send("Review posted");
+  console.log(req.body);
+  
+}
+
 module.exports = {
   index,
-  show
+  show,
+  storeReview
 };
